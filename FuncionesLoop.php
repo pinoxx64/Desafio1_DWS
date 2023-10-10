@@ -1,5 +1,5 @@
 <?php
-class Factoria{
+class FuncionesLoop{
     public static function crearTableroSinValores(){
         $tamano=10;
         $mina=2;
