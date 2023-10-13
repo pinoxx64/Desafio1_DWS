@@ -1,5 +1,5 @@
 <?php
-class Factoria{
+class FuncionesLoop{
     public static function crearTableroSinValores(){
         $tamano=10;
         $mina=2;
@@ -85,5 +85,39 @@ class Factoria{
             }
         }
         return $tableroAus;
+    }
+    public static function revelarUnaCasilla($tablero,$tableroResuelto,$num){
+        $tableroRevelado=[];
+        for ($i=0; $i < count($tablero); $i++) { 
+            if ($i==$num) {
+                array_push($tableroRevelado,$tableroResuelto[$i]);
+            }else{
+                array_push($tableroRevelado,$tablero[$i]);
+            }
+        }
+        return $tableroRevelado;
+    }
+    public static function verSiBomba($tablero){ //El loop de juego se verá interrumpido por esta funcion
+        $fallo=false;
+        for ($i=0; $i < count($tablero); $i++) { 
+            if ($tablero[$i]=='X') {
+                $fallo=true;
+            }
+        }
+        return $fallo;
+    }
+    public static function crearTableroVisibleSinVal(){
+        $tablero=[];
+        for ($i=0; $i < 10; $i++) { 
+            array_push($tablero,'L');
+        }
+        return $tablero;
+    }
+    public static function crearTableroVisibleConVal($num){
+        $tablero=[];
+        for ($i=0; $i < $num; $i++) { 
+            array_push($tablero,'L');
+        }
+        return $tablero;
     }
 }
