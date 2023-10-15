@@ -1,5 +1,5 @@
 <?php
 interface TablebroJuegoDAO{
-    function subirTableroJuego();
-    function bajarTableroJuego();
+    function subirTableroJuego($tablero);
+    function bajarTableroJuego($id);
 }

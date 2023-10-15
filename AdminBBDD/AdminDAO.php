@@ -1,5 +1,5 @@
 <?php
 interface AdminDAO{
-    public function anadirAdmin();
-    public function eliminarAdmin();
+    public function anadirAdmin($nombre,$contrasena);
+    public function eliminarAdmin($id);
 }
