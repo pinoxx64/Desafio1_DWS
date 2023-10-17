@@ -1,5 +1,6 @@
 <?php
 interface UsuarioDAO{
-    public function anadirUsuario($nombre,$contrasena);
-    public function eliminarUsuario($id);
+    public static function anadirUsuario($nombre,$admin,$contrasena,$correo);
+    public static function eliminarUsuario($id);
+    public static function bajarUsuario($nombre,$contrasena);
 }

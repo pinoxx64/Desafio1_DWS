@@ -1,9 +1,10 @@
 <?php
 class AdminDAOImp implements AdminDAO{
-    public function anadirAdmin($nombre,$contrasena){
+    public function anadirAdmin($nombre,$contrasena,$admin){
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $nombre = $_POST["nombre"];
             $contrasena= $_POST["contrasena"];
+            $admin=$_POST["admin"];
             
             // Crear una conexión
             $conn=Conexion::conectar();
@@ -14,13 +15,13 @@ class AdminDAOImp implements AdminDAO{
             }
             
             // Consulta SQL preparada
-            $sql = "INSERT INTO usuarios (nombre_usuario,contrasena) VALUES (?,?)";
+            $sql = "INSERT INTO usuarios (nombre_usuario,contrasena,admin) VALUES (?,?,?)";
             
             // Preparar la declaración
             $stmt = $conn->prepare($sql);
             
             // Vincular los parámetros
-            $stmt->bind_param("ss", $nombre, $contrasena);
+            $stmt->bind_param("ssb", $nombre, $contrasena, $admin);
             
             // Ejecutar la consulta
             if ($stmt->execute()) {
@@ -34,6 +35,7 @@ class AdminDAOImp implements AdminDAO{
             Conexion::desconectar($conn);
         }
     }
+    
     public function eliminarAdmin($id){
                 // Crear una conexión
                 $conn=Conexion::conectar();
