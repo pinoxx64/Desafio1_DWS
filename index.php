@@ -10,7 +10,7 @@ $requestMethod = $_SERVER["REQUEST_METHOD"];
 $paths = $_SERVER['REQUEST_URI'];
 header("HTTP/1.1 405 Verbo no soportado");
 
-$usuario= new Usuario();//falta poner la id del usuario
+$usuario= new Usuario(); //falta poner la id del usuario
 $usu=$paths[0];
 $nombreUsu=$paths[1];
 $contrasena=$paths[2];
@@ -35,13 +35,17 @@ while ($fallo=false||$tableroRevelado==$tableroVisible) {
             $info=LoopJuego::juegoVuelta1($casilla,$tamano,$bombas);
         }
         $tableroVisible=$info[0];
+        echo ($tableroVisible);
         $tableroRevelado=$info[1];
         $fallo=$info[2];
         PartidasDAOImp::subirPartidas($usuario,$tableroVisible,$tableroRevelado);
     }else{
-        $bajadaBBDD=PartidasDAOImp::bajarPartidas($idJuego);
+        $bajadaBBDD=PartidasDAOImp::bajarPartidas($idJuego); //aqui crearé un objeto tipo partida
         $info=LoopJuego::juegoVueltasGeneral($bajadaBBDD[1],$bajadaBBDD[0],$casilla);
         PartidasDAOImp::eliminarPartidas($idJuego);
+        $tableroVisible=$info[0];
+        $tableroRevelado=$info[1];
+        echo ($info[0]);
         PartidasDAOImp::subirPartidas($usuario,$tableroVisible,$tableroRevelado);
         $fallo=$info[2];
     }
