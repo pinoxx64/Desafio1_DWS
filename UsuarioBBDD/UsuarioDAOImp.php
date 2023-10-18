@@ -83,14 +83,14 @@ class UsuarioDAOImp implements UsuarioDAO{
         }
                             
         // Consulta SQL preparada
-        $sql="SELECT * FROM usuarios WHERE id = ?";
+        $sql="SELECT * FROM usuarios WHERE nombre_usuario = ? AND contrasena=?";
 
                         
         // Preparar la declaración
         $stmt = $conn->prepare($sql);
                         
         // Vincular los parámetros
-        $stmt->bind_param("i",$id);
+        $stmt->bind_param("ss",$nombre,$contrasena);
         $resultado = $stmt->get_result();
         
                             

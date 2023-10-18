@@ -1,10 +1,11 @@
 <?php
-//require_once './PartidaBBDD/Partidas.php';
+require_once './PartidaBBDD/Partidas.php';
 require_once './PartidaBBDD/PartidasDAOImp.php';
-//require_once './UsuarioBBDD/Usuario.php';
+require_once './UsuarioBBDD/Usuario.php';
 require_once './UsuarioBBDD/UsuarioDAOImp.php';
 require_once './LoopJuego.php';
 require_once './FuncionesLoop.php';
+require_once './MandaCorreos.php';
 header("Content-Type:application/json");
 $requestMethod = $_SERVER["REQUEST_METHOD"];
 $paths = explode('/', $_SERVER['REQUEST_URI']);
@@ -31,9 +32,12 @@ if ($usu==0) {//iniciar sesion
             printf("Hay un fallo");
         }
     } while ($seguir==false);
-}else{//crear usuario
+}elseif($usu==1){//crear usuario
     UsuarioDAOImp::anadirUsuario($nombreUsu,$admin,$contrasena,$correo);
-    $usuario=UsuarioDAOImp::bajarUsuario($nombreUsu,$contrasena);
+    $usuario=UsuarioDAOImp::bajarUsuario($nombreUsu,$contrasena);    
+}else{
+    $usuario=UsuarioDAOImp::bajarUsuario($nombreUsu,$contrasena);  
+    MandaCorreos::mandarCorreo($usuario->$correo,$usuario->$contrasena);
 }
 $fallo=false;
 $vuelta=0;
@@ -45,21 +49,20 @@ while ($fallo==false||$tableroRevelado==$tableroVisible) {
             $info=LoopJuego::juegoVuelta1($casilla,$tamano,$bombas);
         }
         $tableroVisible=$info[0];
-        print_r($tableroVisible);
+        echo($tableroVisible);
         $tableroRevelado=$info[1];
         $fallo=$info[2];
-        PartidasDAOImp::subirPartidas($usuario->id,$tableroVisible,$tableroRevelado);
+        $idUsuario = $usuario->$id;
+        PartidasDAOImp::subirPartidas($idUsuario,$tableroVisible,$tableroRevelado);
     }else{
         $bajadaBBDD=PartidasDAOImp::bajarPartidas($idJuego); //aqui crearé un objeto tipo partida
         $info=LoopJuego::juegoVueltasGeneral($bajadaBBDD[1],$bajadaBBDD[0],$casilla);
         PartidasDAOImp::eliminarPartidas($idJuego);
         $tableroVisible=$info[0];
         $tableroRevelado=$info[1];
-        print_r($tableroVisible);
+        echo($tableroVisible);
         PartidasDAOImp::subirPartidas($usuario,$tableroVisible,$tableroRevelado);
         $fallo=$info[2];
     }
     $vuelta++;
 }
-
-

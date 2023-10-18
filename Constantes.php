@@ -10,4 +10,9 @@ class Constantes{
     const MINA= "X";
     const VACIO= "I";
     const VACIOENJUEGO= "L";
+
+    //phpMailer
+    const CORREO="todojunto011@gmail.com";
+    const CONTRASENA_CORREO="33356310";
+    
 }
