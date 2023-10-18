@@ -1,4 +1,5 @@
 <?php
+require_once './UsuarioBBDD/UsuarioDAO.php';
 class UsuarioDAOImp implements UsuarioDAO{
     public static function anadirUsuario($nombre,$admin,$contrasena,$correo){
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -19,6 +20,11 @@ class UsuarioDAOImp implements UsuarioDAO{
             // Consulta SQL preparada
             $sql = "INSERT INTO usuarios (nombre_usuario,admin,contrasena,correo) VALUES (?,?,?,?)";
             
+            if ($conn->query($sql) === TRUE) {
+                echo "Nuevo registro insertado con éxito. ID de usuario: " . $conn->insert_id;
+            } else {
+                echo "Error: " . $sql . "<br>" . $conn->error;
+            }
             // Preparar la declaración
             $stmt = $conn->prepare($sql);
             
@@ -77,14 +83,14 @@ class UsuarioDAOImp implements UsuarioDAO{
         }
                             
         // Consulta SQL preparada
-        $sql="SELECT * FROM usuarios WHERE id = ?";
+        $sql="SELECT * FROM usuarios WHERE nombre_usuario = ? AND contrasena=?";
 
                         
         // Preparar la declaración
         $stmt = $conn->prepare($sql);
                         
         // Vincular los parámetros
-        $stmt->bind_param("i",$id);
+        $stmt->bind_param("ss",$nombre,$contrasena);
         $resultado = $stmt->get_result();
         
                             
