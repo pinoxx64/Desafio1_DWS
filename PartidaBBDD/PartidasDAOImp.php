@@ -1,4 +1,5 @@
 <?php
+require_once './PartidaBBDD/PartidasDAO.php';
 class PartidasDAOImp{
     public static function subirPartidas($id_usuario,$partidaEnCurso, $tableroRevelado){
         if ($_SERVER["REQUEST_METHOD"] == "POST") {

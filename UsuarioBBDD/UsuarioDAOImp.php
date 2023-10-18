@@ -1,4 +1,5 @@
 <?php
+require_once './UsuarioBBDD/UsuarioDAO.php';
 class UsuarioDAOImp implements UsuarioDAO{
     public static function anadirUsuario($nombre,$admin,$contrasena,$correo){
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
