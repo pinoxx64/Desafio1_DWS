@@ -21,7 +21,16 @@ $tamano=$paths[6];
 $bombas=$paths[7];
 $idJuego=$paths[8];
 if ($usu=0) {//iniciar sesion
-    //$Usuario=UsuarioDAOImp::bajarUsuario($nombreUsu,$contrasena);
+    $usuAManejar=UsuarioDAOImp::bajarUsuario($nombreUsu,$contrasena);
+    $seguir=false;
+    do {
+        if($usuAManejar[0]==$nombreUsu && $usuAManejar[1]==$contrasena){
+            printf("Usuario registrado");
+            $seguir=true;
+        }else{
+            printf("Hay un fallo");
+        }
+    } while ($seguir=false);
 }else{//crear usuario
     $usuario=UsuarioDAOImp::anadirUsuario($nombreUsu,$admin,$contrasena,$correo);
 }
@@ -35,7 +44,7 @@ while ($fallo=false||$tableroRevelado==$tableroVisible) {
             $info=LoopJuego::juegoVuelta1($casilla,$tamano,$bombas);
         }
         $tableroVisible=$info[0];
-        echo ($tableroVisible);
+        print_r($tableroVisible);
         $tableroRevelado=$info[1];
         $fallo=$info[2];
         PartidasDAOImp::subirPartidas($usuario,$tableroVisible,$tableroRevelado);
@@ -45,7 +54,7 @@ while ($fallo=false||$tableroRevelado==$tableroVisible) {
         PartidasDAOImp::eliminarPartidas($idJuego);
         $tableroVisible=$info[0];
         $tableroRevelado=$info[1];
-        echo ($info[0]);
+        print_r($tableroVisible);
         PartidasDAOImp::subirPartidas($usuario,$tableroVisible,$tableroRevelado);
         $fallo=$info[2];
     }

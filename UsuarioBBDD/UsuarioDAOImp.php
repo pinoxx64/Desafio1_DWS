@@ -19,6 +19,11 @@ class UsuarioDAOImp implements UsuarioDAO{
             // Consulta SQL preparada
             $sql = "INSERT INTO usuarios (nombre_usuario,admin,contrasena,correo) VALUES (?,?,?,?)";
             
+            if ($conn->query($sql) === TRUE) {
+                echo "Nuevo registro insertado con éxito. ID de usuario: " . $conn->insert_id;
+            } else {
+                echo "Error: " . $sql . "<br>" . $conn->error;
+            }
             // Preparar la declaración
             $stmt = $conn->prepare($sql);
             
